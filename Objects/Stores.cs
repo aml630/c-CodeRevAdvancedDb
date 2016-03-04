@@ -60,7 +60,7 @@ namespace ShoeStoreNameSpace
       brandsIdParameter.Value = newBrand.GetId();
       cmd.Parameters.Add(brandsIdParameter);
 
-      cmd.ExecuteNonQuery();
+      cmd.ExecuteScalar();
 
       if (conn != null)
       {

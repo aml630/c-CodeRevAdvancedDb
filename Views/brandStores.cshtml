@@ -1,0 +1,8 @@
+<h1>@Model["brand"].GetTitle() is sold in these stores</h1>
+
+@foreach(var store in @Model["stores"])
+{
+<li>@store.GetStore_name()</li>
+}
+
+<a href = "/">Home</a>

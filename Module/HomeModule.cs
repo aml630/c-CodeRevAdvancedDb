@@ -72,14 +72,14 @@ namespace ShoeStoreNameSpace
         return View["storeBrands.cshtml", newDictionary];
       };
 
-      // Get["/stores/{id}"] = parameters => {
-      //   Dictionary<string, object> newDictionary = new Dictionary<string, object>();
-      //   Store thisStore = Store.Find(parameters.id);
-      //   List<Brand> allBrands = thisStore.GetBrands();
-      //   newDictionary.Add("brands", allBrands);
-      //   newDictionary.Add("store", thisStore);
-      //   return View["storeBrands.cshtml", newDictionary];
-      // };
+      Get["/stores/{id}"] = parameters => {
+        Dictionary<string, object> testDictionary = new Dictionary<string, object>();
+        Brand thisBrand = Brand.Find(parameters.id);
+        List<Store>allStores = thisBrand.GetStores();
+        testDictionary.Add("stores", allStores);
+        testDictionary.Add("brand", thisBrand);
+        return View["brandStores.cshtml", testDictionary];
+      };
 
 
 
