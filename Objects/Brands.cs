@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System;
 
-namespace LibraryNameSpace
+namespace ShoeStoreNameSpace
 {
   public class Book
   {

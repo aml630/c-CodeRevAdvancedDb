@@ -4,13 +4,13 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace LibraryNameSpace
+namespace ShoeStoreNameSpace
 {
   public class BookTest : IDisposable
   {
     public BookTest()
     {
-      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=library_test;Integrated Security=SSPI;";
+      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=shoe_stores_test;Integrated Security=SSPI;";
     }
 
     [Fact]

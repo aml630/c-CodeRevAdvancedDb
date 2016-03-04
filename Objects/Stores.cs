@@ -2,31 +2,31 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System;
 
-namespace LibraryNameSpace
+namespace ShoeStoreNameSpace
 {
-  public class Author
+  public class Store
   {
     private int _id;
-    private string _author_name;
+    private string _store_name;
 
-    public Author(string Author_name, int Id = 0)
+    public Store(string Store_name, int Id = 0)
     {
       _id = Id;
-      _author_name = Author_name;
+      _store_name = Store_name;
     }
 
-    public override bool Equals(System.Object otherAuthor)
+    public override bool Equals(System.Object otherStore)
     {
-        if (!(otherAuthor is Author))
+        if (!(otherStore is Store))
         {
           return false;
         }
         else
         {
-          Author newAuthor = (Author) otherAuthor;
-          bool idEquality = this.GetId() == newAuthor.GetId();
-          bool author_nameEquality = this.GetAuthor_name() == newAuthor.GetAuthor_name();
-          return (idEquality && author_nameEquality);
+          Store newStore = (Store) otherStore;
+          bool idEquality = this.GetId() == newStore.GetId();
+          bool store_nameEquality = this.GetStore_name() == newStore.GetStore_name();
+          return (idEquality && store_nameEquality);
         }
     }
 
@@ -34,13 +34,13 @@ namespace LibraryNameSpace
     {
       return _id;
     }
-    public string GetAuthor_name()
+    public string GetStore_name()
     {
-      return _author_name;
+      return _store_name;
     }
-    public void SetAuthor_name(string newAuthor_name)
+    public void SetStore_name(string newStore_name)
     {
-      _author_name = newAuthor_name;
+      _store_name = newStore_name;
     }
 
     public void AddBook(Book newBook)
@@ -48,12 +48,12 @@ namespace LibraryNameSpace
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO books_authors (author_id, book_id) VALUES (@AuthorId, @BookId)", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO books_stores (store_id, book_id) VALUES (@StoreId, @BookId)", conn);
 
-      SqlParameter AuthorIdParameter = new SqlParameter();
-      AuthorIdParameter.ParameterName = "@AuthorId";
-      AuthorIdParameter.Value = this.GetId();
-      cmd.Parameters.Add(AuthorIdParameter);
+      SqlParameter StoreIdParameter = new SqlParameter();
+      StoreIdParameter.ParameterName = "@StoreId";
+      StoreIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(StoreIdParameter);
 
       SqlParameter booksIdParameter = new SqlParameter();
       booksIdParameter.ParameterName = "@BookId";
@@ -68,23 +68,23 @@ namespace LibraryNameSpace
       }
     }
 
-    public static List<Author> GetAll()
+    public static List<Store> GetAll()
     {
-      List<Author> allAuthors = new List<Author>{};
+      List<Store> allStores = new List<Store>{};
 
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM authors;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stores;", conn);
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
       {
-        int AuthorId = rdr.GetInt32(0);
-        string AuthorAuthor_name= rdr.GetString(1);
-        Author newAuthor = new Author(AuthorAuthor_name, AuthorId);
-        allAuthors.Add(newAuthor);
+        int StoreId = rdr.GetInt32(0);
+        string StoreStore_name= rdr.GetString(1);
+        Store newStore = new Store(StoreStore_name, StoreId);
+        allStores.Add(newStore);
       }
 
       if (rdr != null)
@@ -96,7 +96,7 @@ namespace LibraryNameSpace
         conn.Close();
       }
 
-      return allAuthors;
+      return allStores;
     }
 
     public void Save()
@@ -105,12 +105,12 @@ namespace LibraryNameSpace
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO authors (author_name) OUTPUT INSERTED.id VALUES (@AuthorAuthor_name);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO stores (store_name) OUTPUT INSERTED.id VALUES (@StoreStore_name);", conn);
 
-      SqlParameter author_nameParameter = new SqlParameter();
-      author_nameParameter.ParameterName = "@AuthorAuthor_name";
-      author_nameParameter.Value = this.GetAuthor_name();
-      cmd.Parameters.Add(author_nameParameter);
+      SqlParameter store_nameParameter = new SqlParameter();
+      store_nameParameter.ParameterName = "@StoreStore_name";
+      store_nameParameter.Value = this.GetStore_name();
+      cmd.Parameters.Add(store_nameParameter);
 
       rdr = cmd.ExecuteReader();
 
@@ -132,33 +132,33 @@ namespace LibraryNameSpace
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("DELETE FROM authors;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM stores;", conn);
       cmd.ExecuteNonQuery();
     }
 
-    public static Author Find(int id)
+    public static Store Find(int id)
     {
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM authors WHERE id = @AuthorId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stores WHERE id = @StoreId;", conn);
 
-      SqlParameter AuthorIdParameter = new SqlParameter();
-      AuthorIdParameter.ParameterName = "@AuthorId";
-      AuthorIdParameter.Value = id.ToString();
-      cmd.Parameters.Add(AuthorIdParameter);
+      SqlParameter StoreIdParameter = new SqlParameter();
+      StoreIdParameter.ParameterName = "@StoreId";
+      StoreIdParameter.Value = id.ToString();
+      cmd.Parameters.Add(StoreIdParameter);
       rdr = cmd.ExecuteReader();
 
-      int foundAuthorId = 0;
-      string foundAuthorAuthor_name = null;
+      int foundStoreId = 0;
+      string foundStoreStore_name = null;
 
       while(rdr.Read())
       {
-        foundAuthorId = rdr.GetInt32(0);
-        foundAuthorAuthor_name = rdr.GetString(1);
+        foundStoreId = rdr.GetInt32(0);
+        foundStoreStore_name = rdr.GetString(1);
       }
-      Author foundAuthor = new Author(foundAuthorAuthor_name, foundAuthorId);
+      Store foundStore = new Store(foundStoreStore_name, foundStoreId);
 
       if (rdr != null)
       {
@@ -168,7 +168,7 @@ namespace LibraryNameSpace
       {
         conn.Close();
       }
-      return foundAuthor;
+      return foundStore;
     }
 
     public List<Book> GetBooks()
@@ -179,24 +179,24 @@ namespace LibraryNameSpace
 
       List<Book> books = new List<Book>{};
 
-      SqlCommand cmd = new SqlCommand("SELECT books.* FROM authors JOIN books_authors on (authors.id = books_authors.author_id) JOIN books on (books.id = books_authors.book_id) WHERE authors.id = @AuthorId", conn);
+      SqlCommand cmd = new SqlCommand("SELECT books.* FROM stores JOIN books_stores on (stores.id = books_stores.store_id) JOIN books on (books.id = books_stores.book_id) WHERE stores.id = @StoreId", conn);
 
       //select from the books table
-      //get your targets from the authors table
+      //get your targets from the stores table
       //use the join table to bring these together
-      //specifically, on the join table where the real author id is equal to the join table author_id column Value
+      //specifically, on the join table where the real store id is equal to the join table store_id column Value
       //then, come from the other side, the books table.  look in the join table where the real book id = the join table book_id column
-      //and do all of this based on teh authorID
+      //and do all of this based on teh storeID
 
-      //select books for the author.  first look on teh join table where the author id matches and grab all those books
-      // then look on the books table where it matches the author id
+      //select books for the store.  first look on teh join table where the store id matches and grab all those books
+      // then look on the books table where it matches the store id
 
 
-      SqlParameter AuthorIdParameter = new SqlParameter();
-      AuthorIdParameter.ParameterName = "@AuthorId";
-      AuthorIdParameter.Value = this.GetId();
+      SqlParameter StoreIdParameter = new SqlParameter();
+      StoreIdParameter.ParameterName = "@StoreId";
+      StoreIdParameter.Value = this.GetId();
 
-      cmd.Parameters.Add(AuthorIdParameter);
+      cmd.Parameters.Add(StoreIdParameter);
 
       rdr = cmd.ExecuteReader();
 
@@ -223,29 +223,29 @@ namespace LibraryNameSpace
       return books;
     }
 
-    public void Update(string newAuthor_name)
+    public void Update(string newStore_name)
     {
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE authors SET author_name = @NewAuthor_name OUTPUT INSERTED.author_name WHERE id = @AuthorId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE stores SET store_name = @NewStore_name OUTPUT INSERTED.store_name WHERE id = @StoreId;", conn);
 
-      SqlParameter newAuthor_nameParameter = new SqlParameter();
-      newAuthor_nameParameter.ParameterName = "@NewAuthor_name";
-      newAuthor_nameParameter.Value = newAuthor_name;
-      cmd.Parameters.Add(newAuthor_nameParameter);
+      SqlParameter newStore_nameParameter = new SqlParameter();
+      newStore_nameParameter.ParameterName = "@NewStore_name";
+      newStore_nameParameter.Value = newStore_name;
+      cmd.Parameters.Add(newStore_nameParameter);
 
 
-      SqlParameter AuthorIdParameter = new SqlParameter();
-      AuthorIdParameter.ParameterName = "@AuthorId";
-      AuthorIdParameter.Value = this.GetId();
-      cmd.Parameters.Add(AuthorIdParameter);
+      SqlParameter StoreIdParameter = new SqlParameter();
+      StoreIdParameter.ParameterName = "@StoreId";
+      StoreIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(StoreIdParameter);
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
       {
-        this._author_name = rdr.GetString(0);
+        this._store_name = rdr.GetString(0);
       }
 
       if (rdr != null)
@@ -264,13 +264,13 @@ namespace LibraryNameSpace
       conn.Open();
 
 
-      SqlCommand cmd = new SqlCommand("DELETE books FROM books JOIN books_authors on (books.id = books_authors.book_id) JOIN authors on (authors.id = books_authors.author_id) WHERE authors.id = @AuthorId; DELETE FROM authors WHERE id = @AuthorId; DELETE FROM books_authors WHERE author_id = @AuthorId", conn);
+      SqlCommand cmd = new SqlCommand("DELETE books FROM books JOIN books_stores on (books.id = books_stores.book_id) JOIN stores on (stores.id = books_stores.store_id) WHERE stores.id = @StoreId; DELETE FROM stores WHERE id = @StoreId; DELETE FROM books_stores WHERE store_id = @StoreId", conn);
 
-      SqlParameter AuthorIdParameter = new SqlParameter();
-      AuthorIdParameter.ParameterName = "@AuthorId";
-      AuthorIdParameter.Value = this.GetId();
+      SqlParameter StoreIdParameter = new SqlParameter();
+      StoreIdParameter.ParameterName = "@StoreId";
+      StoreIdParameter.Value = this.GetId();
 
-      cmd.Parameters.Add(AuthorIdParameter);
+      cmd.Parameters.Add(StoreIdParameter);
       cmd.ExecuteNonQuery();
 
       if (conn != null)
