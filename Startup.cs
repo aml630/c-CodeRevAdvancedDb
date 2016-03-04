@@ -42,7 +42,6 @@ namespace ShoeStoreNameSpace
   }
   public static class DBConfiguration
   {
-    public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=shoe_store;Integrated Security=SSPI;";
-    //public static string ConnectionString = "Data Source=CHIYOKAWA\\SQLEXPRESS;Initial Catalog=todo;Integrated Security=SSPI;";
+    public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=shoe_stores;Integrated Security=SSPI;";
   }
 }
