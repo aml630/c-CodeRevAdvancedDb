@@ -43,30 +43,30 @@ namespace ShoeStoreNameSpace
       _store_name = newStore_name;
     }
 
-    public void AddBook(Book newBook)
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
-
-      SqlCommand cmd = new SqlCommand("INSERT INTO books_stores (store_id, book_id) VALUES (@StoreId, @BookId)", conn);
-
-      SqlParameter StoreIdParameter = new SqlParameter();
-      StoreIdParameter.ParameterName = "@StoreId";
-      StoreIdParameter.Value = this.GetId();
-      cmd.Parameters.Add(StoreIdParameter);
-
-      SqlParameter booksIdParameter = new SqlParameter();
-      booksIdParameter.ParameterName = "@BookId";
-      booksIdParameter.Value = newBook.GetId();
-      cmd.Parameters.Add(booksIdParameter);
-
-      cmd.ExecuteNonQuery();
-
-      if (conn != null)
-      {
-        conn.Close();
-      }
-    }
+    // public void AddStore(Store newStore)
+    // {
+    //   SqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //
+    //   SqlCommand cmd = new SqlCommand("INSERT INTO store_brand (store_id, brand_id) VALUES (@StoreId, @BrandId)", conn);
+    //
+    //   SqlParameter StoreIdParameter = new SqlParameter();
+    //   StoreIdParameter.ParameterName = "@StoreId";
+    //   StoreIdParameter.Value = this.GetId();
+    //   cmd.Parameters.Add(StoreIdParameter);
+    //
+    //   SqlParameter brandsIdParameter = new SqlParameter();
+    //   brandsIdParameter.ParameterName = "@BrandId";
+    //   brandsIdParameter.Value = newBrand.GetId();
+    //   cmd.Parameters.Add(brandsIdParameter);
+    //
+    //   cmd.ExecuteNonQuery();
+    //
+    //   if (conn != null)
+    //   {
+    //     conn.Close();
+    //   }
+    // }
 
     public static List<Store> GetAll()
     {
@@ -171,57 +171,44 @@ namespace ShoeStoreNameSpace
       return foundStore;
     }
 
-    public List<Book> GetBooks()
-    {
-      SqlConnection conn = DB.Connection();
-      SqlDataReader rdr = null;
-      conn.Open();
-
-      List<Book> books = new List<Book>{};
-
-      SqlCommand cmd = new SqlCommand("SELECT books.* FROM stores JOIN books_stores on (stores.id = books_stores.store_id) JOIN books on (books.id = books_stores.book_id) WHERE stores.id = @StoreId", conn);
-
-      //select from the books table
-      //get your targets from the stores table
-      //use the join table to bring these together
-      //specifically, on the join table where the real store id is equal to the join table store_id column Value
-      //then, come from the other side, the books table.  look in the join table where the real book id = the join table book_id column
-      //and do all of this based on teh storeID
-
-      //select books for the store.  first look on teh join table where the store id matches and grab all those books
-      // then look on the books table where it matches the store id
-
-
-      SqlParameter StoreIdParameter = new SqlParameter();
-      StoreIdParameter.ParameterName = "@StoreId";
-      StoreIdParameter.Value = this.GetId();
-
-      cmd.Parameters.Add(StoreIdParameter);
-
-      rdr = cmd.ExecuteReader();
-
-      List<int> booksIds = new List<int> {};
-      while(rdr.Read())
-      {
-        int booksId = rdr.GetInt32(0);
-        string booksName = rdr.GetString(1);
-        bool Checked_out = rdr.GetBoolean(2);
-
-        Book newBook = new Book(booksName, Checked_out, booksId);
-        books.Add(newBook);
-      }
-      if (rdr != null)
-      {
-        rdr.Close();
-      }
-      if (conn != null)
-      {
-        conn.Close();
-      }
-
-
-      return books;
-    }
+    // public List<Brand> GetBrands()
+    // {
+    //   SqlConnection conn = DB.Connection();
+    //   SqlDataReader rdr = null;
+    //   conn.Open();
+    //
+    //   List<Brand> brands = new List<Brand>{};
+    //
+    //   SqlCommand cmd = new SqlCommand("SELECT brands.* FROM stores JOIN store_brand on (stores.id = store_brand.store_id) JOIN brands on (brands.id = store_brand.brand_id) WHERE stores.id = @StoreId", conn);
+    //
+    //   SqlParameter StoreIdParameter = new SqlParameter();
+    //   StoreIdParameter.ParameterName = "@StoreId";
+    //   StoreIdParameter.Value = this.GetId();
+    //
+    //   cmd.Parameters.Add(StoreIdParameter);
+    //
+    //   rdr = cmd.ExecuteReader();
+    //
+    //   List<int> brandsIds = new List<int> {};
+    //   while(rdr.Read())
+    //   {
+    //     int brandsId = rdr.GetInt32(0);
+    //     string brandsName = rdr.GetString(1);
+    //
+    //
+    //     Brand newBrand = new Brand(brandsName, brandsId);
+    //     brands.Add(newBrand);
+    //   }
+    //   if (rdr != null)
+    //   {
+    //     rdr.Close();
+    //   }
+    //   if (conn != null)
+    //   {
+    //     conn.Close();
+    //   }
+    //   return brands;
+    // }
 
     public void Update(string newStore_name)
     {
@@ -264,7 +251,7 @@ namespace ShoeStoreNameSpace
       conn.Open();
 
 
-      SqlCommand cmd = new SqlCommand("DELETE books FROM books JOIN books_stores on (books.id = books_stores.book_id) JOIN stores on (stores.id = books_stores.store_id) WHERE stores.id = @StoreId; DELETE FROM stores WHERE id = @StoreId; DELETE FROM books_stores WHERE store_id = @StoreId", conn);
+      SqlCommand cmd = new SqlCommand("DELETE brands FROM brands JOIN store_brand on (brands.id = store_brand.brand_id) JOIN stores on (stores.id = store_brand.store_id) WHERE stores.id = @StoreId; DELETE FROM stores WHERE id = @StoreId; DELETE FROM store_brand WHERE store_id = @StoreId", conn);
 
       SqlParameter StoreIdParameter = new SqlParameter();
       StoreIdParameter.ParameterName = "@StoreId";
