@@ -13,60 +13,39 @@ namespace ShoeStoreNameSpace
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=shoe_stores_test;Integrated Security=SSPI;";
     }
 
-    // [Fact]
-    // public void Test_AddStore_AddsStoreToStores()
-    // {
-    //   //Arrange
-    //   Store testStore = new Store("Safeway");
-    //   testStore.Save();
-    //
-    //   Store firstStore = new Store("Magic Johnson");
-    //   firstStore.Save();
-    //
-    //   Store secondStore = new Store("Magic James");
-    //   secondStore.Save();
-    //
-    //   //Act
-    //   testStore.AddStore(firstStore);
-    //   testStore.AddStore(secondStore);
-    //
-    //   List<Store> result = testStore.GetStores();
-    //   List<Store> testList = new List<Store>{firstStore, secondStore};
-    //
-    //   //Assert
-    //   Assert.Equal(testList, result);
-    // }
+    [Fact]
+    public void Test_AddStore_AddsStoreToStores()
+    {
+      //Arrange
+      Store testStore = new Store("Safeway");
+      testStore.Save();
 
-    // [Fact]
-    // public void Test_GetStores_ReturnsAllStoreStores()
-    // {
-    //   //Arrange
-    //   Store testStore = new Store("Safeway");
-    //   testStore.Save();
-    //
-    //   Store firstStore = new Store("Magic Johnson");
-    //   firstStore.Save();
-    //
-    //   Store secondStore = new Store("Magic James");
-    //   secondStore.Save();
-    //
-    //   //Act
-    //   testStore.AddStore(firstStore);
-    //   List<Store> savedStores = testStore.GetStores();
-    //   List<Store> testList = new List<Store> {firstStore};
-    //
-    //   //Assert
-    //   Assert.Equal(testList, savedStores);
-    // }
-    // [Fact]
-    // public void Test_CategoriesEmptyAtFirst()
-    // {
-    //   //Arrange, Act
-    //   int result = Store.GetAll().Count;
-    //
-    //   //Assert
-    //   Assert.Equal(0, result);
-    // }
+      Brand firstBrand = new Brand("Magic Johnson");
+      firstBrand.Save();
+
+      Brand secondBrand = new Brand("Magic James");
+      secondBrand.Save();
+
+      //Act
+      testStore.AddBrand(firstBrand);
+      testStore.AddBrand(secondBrand);
+
+      List<Brand> result = testStore.GetBrands();
+      List<Brand> testList = new List<Brand>{firstBrand, secondBrand};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
+    [Fact]
+    public void Test_CategoriesEmptyAtFirst()
+    {
+      //Arrange, Act
+      int result = Store.GetAll().Count;
+
+      //Assert
+      Assert.Equal(0, result);
+    }
 
     [Fact]
     public void Test_Equal_ReturnsTrueForSameName()

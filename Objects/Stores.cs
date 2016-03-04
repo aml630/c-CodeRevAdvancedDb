@@ -43,30 +43,30 @@ namespace ShoeStoreNameSpace
       _store_name = newStore_name;
     }
 
-    // public void AddStore(Store newStore)
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("INSERT INTO store_brand (store_id, brand_id) VALUES (@StoreId, @BrandId)", conn);
-    //
-    //   SqlParameter StoreIdParameter = new SqlParameter();
-    //   StoreIdParameter.ParameterName = "@StoreId";
-    //   StoreIdParameter.Value = this.GetId();
-    //   cmd.Parameters.Add(StoreIdParameter);
-    //
-    //   SqlParameter brandsIdParameter = new SqlParameter();
-    //   brandsIdParameter.ParameterName = "@BrandId";
-    //   brandsIdParameter.Value = newBrand.GetId();
-    //   cmd.Parameters.Add(brandsIdParameter);
-    //
-    //   cmd.ExecuteNonQuery();
-    //
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    // }
+    public void AddBrand(Brand newBrand)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO store_brand (store_id, brand_id) VALUES (@StoreId, @BrandId)", conn);
+
+      SqlParameter StoreIdParameter = new SqlParameter();
+      StoreIdParameter.ParameterName = "@StoreId";
+      StoreIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(StoreIdParameter);
+
+      SqlParameter brandsIdParameter = new SqlParameter();
+      brandsIdParameter.ParameterName = "@BrandId";
+      brandsIdParameter.Value = newBrand.GetId();
+      cmd.Parameters.Add(brandsIdParameter);
+
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
 
     public static List<Store> GetAll()
     {
@@ -171,44 +171,42 @@ namespace ShoeStoreNameSpace
       return foundStore;
     }
 
-    // public List<Brand> GetBrands()
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   SqlDataReader rdr = null;
-    //   conn.Open();
-    //
-    //   List<Brand> brands = new List<Brand>{};
-    //
-    //   SqlCommand cmd = new SqlCommand("SELECT brands.* FROM stores JOIN store_brand on (stores.id = store_brand.store_id) JOIN brands on (brands.id = store_brand.brand_id) WHERE stores.id = @StoreId", conn);
-    //
-    //   SqlParameter StoreIdParameter = new SqlParameter();
-    //   StoreIdParameter.ParameterName = "@StoreId";
-    //   StoreIdParameter.Value = this.GetId();
-    //
-    //   cmd.Parameters.Add(StoreIdParameter);
-    //
-    //   rdr = cmd.ExecuteReader();
-    //
-    //   List<int> brandsIds = new List<int> {};
-    //   while(rdr.Read())
-    //   {
-    //     int brandsId = rdr.GetInt32(0);
-    //     string brandsName = rdr.GetString(1);
-    //
-    //
-    //     Brand newBrand = new Brand(brandsName, brandsId);
-    //     brands.Add(newBrand);
-    //   }
-    //   if (rdr != null)
-    //   {
-    //     rdr.Close();
-    //   }
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    //   return brands;
-    // }
+    public List<Brand> GetBrands()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      List<Brand> brands = new List<Brand>{};
+
+      SqlCommand cmd = new SqlCommand("SELECT brands.* FROM stores JOIN store_brand on (stores.id = store_brand.store_id) JOIN brands on (brands.id = store_brand.brand_id) WHERE stores.id = @StoreId", conn);
+
+      SqlParameter StoreIdParameter = new SqlParameter();
+      StoreIdParameter.ParameterName = "@StoreId";
+      StoreIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(StoreIdParameter);
+
+      rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        int brandsId = rdr.GetInt32(0);
+        string brandsName = rdr.GetString(1);
+
+        Brand newBrand = new Brand(brandsName, brandsId);
+        brands.Add(newBrand);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return brands;
+    }
 
     public void Update(string newStore_name)
     {
