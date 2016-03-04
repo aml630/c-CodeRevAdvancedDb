@@ -54,9 +54,11 @@ namespace ShoeStoreNameSpace
       Get["/brands/{id}"] = parameters => {
         Dictionary<string, object> newDictionary = new Dictionary<string, object>();
         Store thisStore = Store.Find(parameters.id);
-        List<Brand> allBrands = thisStore.GetBrands();
-        newDictionary.Add("brands", allBrands);
+        List<Brand> thisBrands = thisStore.GetBrands();
+        List<Brand> allBrands = Brand.GetAll();
+        newDictionary.Add("brands", thisBrands);
         newDictionary.Add("store", thisStore);
+        newDictionary.Add("allBrands", allBrands);
         return View["storeBrands.cshtml", newDictionary];
       };
 
@@ -66,8 +68,10 @@ namespace ShoeStoreNameSpace
         Brand newBrand = new Brand(Request.Form["newBrand"]);
         newBrand.Save();
         thisStore.AddBrand(newBrand);
-        List<Brand> allBrands = thisStore.GetBrands();
-        newDictionary.Add("brands", allBrands);
+        List<Brand> thisBrands = thisStore.GetBrands();
+        List<Brand> allBrands = Brand.GetAll();
+        newDictionary.Add("allBrands", allBrands);
+        newDictionary.Add("brands", thisBrands);
         newDictionary.Add("store", thisStore);
         return View["storeBrands.cshtml", newDictionary];
       };
@@ -81,6 +85,18 @@ namespace ShoeStoreNameSpace
         return View["brandStores.cshtml", testDictionary];
       };
 
+      Post["/oldBrand/{id}"] = parameters => {
+        Dictionary<string, object> newDictionary = new Dictionary<string, object>();
+        Store thisStore = Store.Find(parameters.id);
+        Brand thisBrand = Brand.FindTitle(Request.Form["oldBrand"]);
+        thisStore.AddBrand(thisBrand);
+        List<Brand> thisBrands = thisStore.GetBrands();
+        List<Brand> allBrands = Brand.GetAll();
+        newDictionary.Add("brands", thisBrands);
+        newDictionary.Add("store", thisStore);
+        newDictionary.Add("allBrands", allBrands);
+        return View["storeBrands.cshtml", newDictionary];
+      };
 
 
 

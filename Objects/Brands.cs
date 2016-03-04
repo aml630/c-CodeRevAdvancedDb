@@ -175,6 +175,43 @@ namespace ShoeStoreNameSpace
       return foundBrand;
     }
 
+    public static Brand FindTitle(string title)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM brands WHERE brand_name = @BrandTitle", conn);
+      SqlParameter brandIdParameter = new SqlParameter();
+      brandIdParameter.ParameterName = "@BrandTitle";
+      brandIdParameter.Value = title.ToString();
+
+      cmd.Parameters.Add(brandIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      int foundBrandId = 0;
+      string foundBrandTitle = null;
+
+
+      while(rdr.Read())
+      {
+        foundBrandId = rdr.GetInt32(0);
+        foundBrandTitle = rdr.GetString(1);
+      }
+      Brand foundBrand = new Brand(foundBrandTitle, foundBrandId);
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundBrand;
+    }
+
+
     public void AddStore(Store newStores)
     {
       SqlConnection conn = DB.Connection();

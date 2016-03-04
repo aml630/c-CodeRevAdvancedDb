@@ -5,6 +5,17 @@
 <button>Add Brand</button>
 </form>
 
+<form action = '/oldBrand/@Model["store"].GetId()' method = "post">
+<select name = "oldBrand">
+  @foreach(var brand in @Model["allBrands"])
+  {
+  <option>@brand.GetTitle()</option>
+  })
+
+</select>
+<button>Select From Existing Brands To Add</button>
+</form>
+
 @foreach(var brand in @Model["brands"])
 {
 <li>@brand.GetTitle()</h1>
