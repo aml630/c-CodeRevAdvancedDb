@@ -43,6 +43,30 @@ namespace ShoeStoreNameSpace
         return View["index.cshtml", newDictionary];
       };
 
+      Get["/brands/{id}"] = parameters => {
+        Dictionary<string, object> newDictionary = new Dictionary<string, object>();
+        Store thisStore = Store.Find(parameters.id);
+        List<Brand> allBrands = thisStore.GetBrands();
+        newDictionary.Add("brands", allBrands);
+        newDictionary.Add("store", thisStore);
+        return View["storeBrands.cshtml", newDictionary];
+      };
+
+      Post["/newBrand/{id}"] = parameters => {
+        Dictionary<string, object> newDictionary = new Dictionary<string, object>();
+        Store thisStore = Store.Find(parameters.id);
+        Brand newBrand = new Brand(Request.Form["newBrand"]);
+        newBrand.Save();
+        thisStore.AddBrand(newBrand);
+        List<Brand> allBrands = thisStore.GetBrands();
+        newDictionary.Add("brands", allBrands);
+        newDictionary.Add("store", thisStore);
+        return View["storeBrands.cshtml", newDictionary];
+      };
+
+
+
+
 
 
     }

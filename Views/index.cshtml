@@ -19,7 +19,7 @@
 {
   @foreach(var store in @Model["stores"])
   {
-    <li>@store.GetStore_name()</li>
+    <li><a href = "/brands/@store.GetId()">@store.GetStore_name()</a></li>
 
     <form action ='/editStore/@store.GetId()' method = "post">
     <input type="hidden" name="_method" value="PATCH">

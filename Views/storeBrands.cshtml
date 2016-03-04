@@ -1,0 +1,15 @@
+<h1>@Model["store"].GetStore_name() Brands</h1>
+
+<form action = '/newBrand/@Model["store"].GetId()' method = "post">
+<input name = "newBrand"></input>
+<button>Add Brand</button>
+</form>
+
+@foreach(var brand in @Model["brands"])
+{
+<li>@brand.GetTitle()</h1>
+}
+
+</br>
+
+<a href = "/">Home</a>
