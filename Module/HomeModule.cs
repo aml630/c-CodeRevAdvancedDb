@@ -12,6 +12,8 @@ namespace ShoeStoreNameSpace
       Get["/"] = _ => {
         Dictionary<string, object> newDictionary = new Dictionary<string, object>();
         List<Store> allStores = Store.GetAll();
+        List<Brand> allBrands = Brand.GetAll();
+        newDictionary.Add("brands", allBrands);
         newDictionary.Add("stores", allStores);
         return View["index.cshtml", newDictionary];
       };
@@ -21,6 +23,8 @@ namespace ShoeStoreNameSpace
         newStore.Save();
         Dictionary<string, object> newDictionary = new Dictionary<string, object>();
         List<Store> allStores = Store.GetAll();
+        List<Brand> allBrands = Brand.GetAll();
+        newDictionary.Add("brands", allBrands);
         newDictionary.Add("stores", allStores);
         return View["index.cshtml", newDictionary];
       };
@@ -30,6 +34,8 @@ namespace ShoeStoreNameSpace
         newStore.Delete();
         Dictionary<string, object> newDictionary = new Dictionary<string, object>();
         List<Store> allStores = Store.GetAll();
+        List<Brand> allBrands = Brand.GetAll();
+        newDictionary.Add("brands", allBrands);
         newDictionary.Add("stores", allStores);
         return View["index.cshtml", newDictionary];
       };
@@ -39,6 +45,8 @@ namespace ShoeStoreNameSpace
         newStore.Update(Request.Form["editStoreName"]);
         Dictionary<string, object> newDictionary = new Dictionary<string, object>();
         List<Store> allStores = Store.GetAll();
+        List<Brand> allBrands = Brand.GetAll();
+        newDictionary.Add("brands", allBrands);
         newDictionary.Add("stores", allStores);
         return View["index.cshtml", newDictionary];
       };
@@ -63,6 +71,15 @@ namespace ShoeStoreNameSpace
         newDictionary.Add("store", thisStore);
         return View["storeBrands.cshtml", newDictionary];
       };
+
+      // Get["/stores/{id}"] = parameters => {
+      //   Dictionary<string, object> newDictionary = new Dictionary<string, object>();
+      //   Store thisStore = Store.Find(parameters.id);
+      //   List<Brand> allBrands = thisStore.GetBrands();
+      //   newDictionary.Add("brands", allBrands);
+      //   newDictionary.Add("store", thisStore);
+      //   return View["storeBrands.cshtml", newDictionary];
+      // };
 
 
 

@@ -6,6 +6,7 @@
   </head>
 <body>
     <h1>Shoe Store</h1>
+    <a href ="/brandList">Brand List</a>
 
     <form action = "/createStore" method = "post">
       <input name = "storeName"></input>
@@ -34,5 +35,15 @@
     <p> //////////////////////////////</p>
   }
 }
+
+@if(@Model["brands"].Count > 0)
+{
+  @foreach(var brand in @Model["brands"])
+  {
+    <li><a href = "/stores/@brand.GetId()">@brand.GetTitle()</a></li>
+  }
+}
+
+
 </body>
 </html>

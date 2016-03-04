@@ -105,27 +105,27 @@ namespace ShoeStoreNameSpace
     //   Assert.Equal(testList, result);
     // }
 
-    // [Fact]
-    // public void Test_GetStores_ReturnsAllBrandStores()
-    // {
-    //   //Arrange
-    //   Brand testBrand = new Brand("Magic Johnson");
-    //   testBrand.Save();
-    //
-    //   Store testStore1 = new Store("Math");
-    //   testStore1.Save();
-    //
-    //   Store testStore2 = new Store("Gym");
-    //   testStore2.Save();
-    //
-    //   //Act
-    //   testBrand.AddStore(testStore1);
-    //   List<Store> result = testBrand.GetStores();
-    //   List<Store> testList = new List<Store> {testStore1};
-    //
-    //   //Assert
-    //   Assert.Equal(testList, result);
-    // }
+    [Fact]
+    public void Test_GetStores_ReturnsAllBrandStores()
+    {
+      //Arrange
+      Brand testBrand = new Brand("Magic Johnson");
+      testBrand.Save();
+
+      Store testStore1 = new Store("Math");
+      testStore1.Save();
+
+      Store testStore2 = new Store("Gym");
+      testStore2.Save();
+
+      //Act
+      testBrand.AddStore(testStore1);
+      List<Store> result = testBrand.GetStores();
+      List<Store> testList = new List<Store> {testStore1};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
 
   // [Fact]
   // public void Test_Search_ReturnsAllSearchedStores()
