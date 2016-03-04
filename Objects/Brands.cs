@@ -67,38 +67,6 @@ namespace ShoeStoreNameSpace
       return AllBrands;
     }
 
-    // public void Save()
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   SqlDataReader rdr;
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("INSERT INTO brands (brand_name) OUTPUT INSERTED.id VALUES (@BrandTitle)", conn);
-    //
-    //   SqlParameter titleParameter = new SqlParameter();
-    //   titleParameter.ParameterName = "@BrandTitle";
-    //   titleParameter.Value = this.GetTitle();
-    //
-    //
-    //   cmd.Parameters.Add(titleParameter);
-    //
-    //
-    //   rdr = cmd.ExecuteReader();
-    //
-    //   while(rdr.Read())
-    //   {
-    //     this._id = rdr.GetInt32(0);
-    //   }
-    //   if (rdr != null)
-    //   {
-    //     rdr.Close();
-    //   }
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    // }
-
     public void Save()
     {
       SqlConnection conn = DB.Connection();
