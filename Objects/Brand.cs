@@ -185,7 +185,7 @@ namespace ShoeStoreNameSpace
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO stores_brands (store_id, brand_id) VALUES (@Stores_id, @Brand_id);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO brands_stores (store_id, brand_id) VALUES (@Stores_id, @Brand_id);", conn);
 
       SqlParameter storesIdParameter = new SqlParameter();
       storesIdParameter.ParameterName = "@Stores_id";
@@ -213,7 +213,7 @@ namespace ShoeStoreNameSpace
 
       List<Store> stores = new List<Store>{};
 
-      SqlCommand cmd = new SqlCommand("SELECT stores.* from brands JOIN stores_brands on (brands.id = stores_brands.brand_id) JOIN stores on (stores.id = stores_brands.store_id) WHERE brands.id = @BrandId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT stores.* from brands JOIN brands_stores on (brands.id = brands_stores.brand_id) JOIN stores on (stores.id = brands_stores.store_id) WHERE brands.id = @BrandId;", conn);
 
       SqlParameter brandIdParameter = new SqlParameter();
       brandIdParameter.ParameterName = "@BrandId";

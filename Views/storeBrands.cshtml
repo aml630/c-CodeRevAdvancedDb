@@ -1,11 +1,11 @@
 <h1>@Model["store"].GetStore_name() Brands</h1>
 
-<form action = '/new_brand/@Model["store"].GetId()' method = "post">
+<form action = '/brand/new/@Model["store"].GetId()' method = "post">
 <input name = "newBrand"></input>
 <button>Add Brand</button>
 </form>
 
-<form action = '/old_brand/@Model["store"].GetId()' method = "post">
+<form action = '/brand/existing/@Model["store"].GetId()' method = "post">
 <select name = "oldBrand">
   @foreach(var brand in @Model["allBrands"])
   {

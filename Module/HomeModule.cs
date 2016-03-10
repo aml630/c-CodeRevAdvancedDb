@@ -18,7 +18,7 @@ namespace ShoeStoreNameSpace
         return View["index.cshtml", newDictionary];
       };
 
-      Post["/create_store"] = _ => {
+      Post["/store/new"] = _ => {
         Store newStore = new Store(Request.Form["storeName"]);
         newStore.Save();
         Dictionary<string, object> newDictionary = new Dictionary<string, object>();
@@ -40,7 +40,7 @@ namespace ShoeStoreNameSpace
         return View["index.cshtml", newDictionary];
       };
 
-      Patch["/edit_store/{id}"] =parameters=> {
+      Patch["/edit/store/{id}"] =parameters=> {
         Store newStore = Store.Find(parameters.id);
         newStore.Update(Request.Form["editStoreName"]);
         Dictionary<string, object> newDictionary = new Dictionary<string, object>();
@@ -62,7 +62,7 @@ namespace ShoeStoreNameSpace
         return View["storeBrands.cshtml", newDictionary];
       };
 
-      Post["/new_brand/{id}"] = parameters => {
+      Post["/brand/new/{id}"] = parameters => {
         Dictionary<string, object> newDictionary = new Dictionary<string, object>();
         Store thisStore = Store.Find(parameters.id);
         Brand newBrand = new Brand(Request.Form["newBrand"]);
@@ -85,7 +85,7 @@ namespace ShoeStoreNameSpace
         return View["brandStores.cshtml", testDictionary];
       };
 
-      Post["/old_brand/{id}"] = parameters => {
+      Post["/brand/existing/{id}"] = parameters => {
         Dictionary<string, object> newDictionary = new Dictionary<string, object>();
         Store thisStore = Store.Find(parameters.id);
         Brand thisBrand = Brand.FindTitle(Request.Form["oldBrand"]);

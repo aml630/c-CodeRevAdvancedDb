@@ -7,7 +7,7 @@
 <body>
     <h1>Shoe Store</h1>
 
-    <form action = "/create_store" method = "post">
+    <form action = "/store/new" method = "post">
       <input name = "storeName"></input>
       <button>Create Store</button>
     </form>
@@ -21,7 +21,7 @@
   {
     <li><a href = "/brands/@store.GetId()">@store.GetStore_name()</a></li>
 
-    <form action ='/edit_store/@store.GetId()' method = "post">
+    <form action ='/edit/store/@store.GetId()' method = "post">
     <input type="hidden" name="_method" value="PATCH">
     <input name = "editStoreName"></input>
     <button>Update Name</button>
